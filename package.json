@@ -1,6 +1,11 @@
 {
   "name": "typescript-react-boilerplate",
   "version": "0.1.0",
+  "puppeteer": {
+    "chromium_revision": "494755"
+  },
+  "homepage": "./",
+  "main": "public/electron.ts",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
@@ -9,6 +14,10 @@
     "@types/material-ui": "^0.21.8",
     "antd": "^4.6.0",
     "axios": "^0.19.2",
+    "electron-is-dev": "^1.1.0",
+    "electron-json-storage": "^4.2.0",
+    "node-fetch": "^2.6.0",
+    "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.7.2",
@@ -26,6 +35,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@toast-ui/react-editor": "^1.0.1",
+    "@toast-ui/react-image-editor": "^1.2.0",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -37,6 +48,12 @@
     "@typescript-eslint/eslint-plugin": "2.23.0",
     "@typescript-eslint/parser": "2.23.0",
     "@typescript-eslint/typescript-estree": "2.23.0",
+    "canvas": "^2.6.1",
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "electron": "9.1.0",
+    "electron-builder": "^22.4.1",
+    "electron-reload": "^1.5.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",
@@ -50,18 +67,18 @@
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.9.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.1",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "wait-on": "^4.0.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder --config ./electron-builder.yml",
+    "start:electron": "electron .",
+    "react-start": "react-scripts start",
     "build": "react-scripts build",
-    "build-production": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "bash scripts/deploy-dev.sh",
-    "deploy:production": "bash scripts/deploy-prod.sh",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
-    "fix": "eslint './src/**/*.{ts,tsx}' --fix"
+    "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'"
   },
   "eslintConfig": {
     "extends": "react-app"
